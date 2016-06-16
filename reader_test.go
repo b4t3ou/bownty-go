@@ -126,3 +126,21 @@ func TestAPIReader_GetDealSitesList(t *testing.T) {
 		t.Error("Expected deal sites count 5")
 	}
 }
+
+func TestAPIReader_GetCategoryList(t *testing.T) {
+	Domain = "https://bownty.co.uk"
+	reader := Create(5, 1)
+	countries, _ := reader.GetCategoryList(252)
+
+	if reflect.TypeOf(countries).String() != "*bownty.Categories" {
+		t.Error("Expected return value category list")
+	}
+
+	if !countries.Success {
+		t.Error("Expected success category list response")
+	}
+
+	if len(countries.Data) != 5 {
+		t.Error("Expected category count 5")
+	}
+}

@@ -94,7 +94,7 @@ func (r *APIReader) GetCityList(countryId int) (*Locations, error) {
 	return result, nil
 }
 
-// GetMerchantList returns with *Merchants
+// GetDealSitesList returns with *Merchants
 // Returns with the deal sites endpoint data filtered by the country
 func (r *APIReader) GetDealSitesList(countryId int) (*Merchants, error) {
 	result := &Merchants{}
@@ -112,6 +112,27 @@ func (r *APIReader) GetDealSitesList(countryId int) (*Merchants, error) {
 
 	return result, nil
 }
+
+// GetCategoryList returns with *Categories
+// Returns with the categories endpoint data filtered by the country
+func (r *APIReader) GetCategoryList(countryId int) (*Categories, error) {
+	result := &Categories{}
+	content, err := r.get("categories", ":country_id", strconv.Itoa(countryId))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(content, result)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+
 
 func (r *APIReader) get(key string, params ...string) ([]byte, error) {
 	url := r.Urls[key]
