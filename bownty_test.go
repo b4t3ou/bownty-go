@@ -91,14 +91,31 @@ func TestAPIReader_GetCityList(t *testing.T) {
 	countries, _ := reader.GetCityList(252)
 
 	if reflect.TypeOf(countries).String() != "*bownty.Locations" {
-		t.Error("Expected return value countries list")
+		t.Error("Expected return value city list")
 	}
 
 	if !countries.Success {
-		t.Error("Expected success country list response")
+		t.Error("Expected success city list response")
 	}
 
 	if len(countries.Data) != 5 {
-		t.Error("Expected country count 5")
+		t.Error("Expected city count 5")
+	}
+}
+
+func TestAPIReader_GetDealSitesList(t *testing.T) {
+	reader := Create("https://bownty.co.uk", 5, 1)
+	countries, _ := reader.GetDealSitesList(252)
+
+	if reflect.TypeOf(countries).String() != "*bownty.Merchants" {
+		t.Error("Expected return value deal sites list")
+	}
+
+	if !countries.Success {
+		t.Error("Expected success deal sites list response")
+	}
+
+	if len(countries.Data) != 5 {
+		t.Error("Expected deal sites count 5")
 	}
 }

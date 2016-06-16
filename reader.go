@@ -26,7 +26,7 @@ type APIReader struct {
 var endPoints = map[string]string{
 	"countries":  "/api/countries.json",
 	"cities":     "/locations/:country_id/cities.json",
-	"merchants":  "/locations/:country_id/deal_sites.json",
+	"deal_sites":  "/locations/:country_id/deal_sites.json",
 	"categories": "/locations/:country_id/categories.json",
 	"deals":      "/locations/:city_id/deals.json",
 }
@@ -74,10 +74,29 @@ func (r *APIReader) GetCountryList() (*Locations, error) {
 }
 
 // GetCountryList returns with *Locations struct
-// Returns with the cities endpoint data
+// Returns with the cities endpoint data filtered by the country
 func (r *APIReader) GetCityList(countryId int) (*Locations, error) {
 	result := &Locations{}
 	content, err := r.get("cities", ":country_id", strconv.Itoa(countryId))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(content, result)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+// GetMerchantList returns with *Merchants
+// Returns with the deal sites endpoint data filtered by the country
+func (r *APIReader) GetDealSitesList(countryId int) (*Merchants, error) {
+	result := &Merchants{}
+	content, err := r.get("deal_sites", ":country_id", strconv.Itoa(countryId))
 
 	if err != nil {
 		return nil, err
