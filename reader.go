@@ -132,7 +132,25 @@ func (r *APIReader) GetCategoryList(countryId int) (*Categories, error) {
 	return result, nil
 }
 
+// GetDealList returns with *Deals
+// Returns with the deals endpoint data filtered by the city or the country id
+// If you want to get all the deals in a country add this extra param "inclusive_location=1"
+func (r *APIReader) GetDealList(cityId int) (*Deals, error) {
+	result := &Deals{}
+	content, err :=r.get("deals", ":city_id", strconv.Itoa(cityId))
 
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(content, result)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
 
 func (r *APIReader) get(key string, params ...string) ([]byte, error) {
 	url := r.Urls[key]
