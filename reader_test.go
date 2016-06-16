@@ -13,7 +13,8 @@ func TestCreate(t *testing.T) {
 		}
 	}()
 
-	reader := Create("https://bownty.co.uk", 20, 1)
+	Domain = "https://bownty.co.uk"
+	reader := Create(20, 1)
 
 	if reader.Limit != 20 {
 		t.Error("Expected limit 20")
@@ -27,12 +28,14 @@ func TestCreate(t *testing.T) {
 		t.Error("Faild to create api reader")
 	}
 
-	_ = Create("", 2, 1)
+	Domain = ""
+	_ = Create(2, 1)
 }
 
 // TestAPIReader_AddExtraParams tests adding extra params to your query
 func TestAPIReader_AddExtraParams(t *testing.T) {
-	reader := Create("https://bownty.co.uk", 20, 1)
+	Domain = "https://bownty.co.uk"
+	reader := Create(20, 1)
 	reader.AddExtraParams("price_range=100-200")
 
 	if len(reader.extraParams) != 1 {
@@ -60,7 +63,8 @@ func TestAPIReader_AddExtraParams(t *testing.T) {
 
 // TestGet tests the main api caller
 func TestGet(t *testing.T) {
-	reader := Create("https://bownty.co.uk", 20, 1)
+	Domain = "https://bownty.co.uk"
+	reader := Create(20, 1)
 	_, err := reader.get("countries")
 
 	if err != nil {
@@ -70,7 +74,8 @@ func TestGet(t *testing.T) {
 
 // TestAPIReader_GetCountryList tests to get back the country list
 func TestAPIReader_GetCountryList(t *testing.T) {
-	reader := Create("https://bownty.co.uk", 5, 1)
+	Domain = "https://bownty.co.uk"
+	reader := Create(5, 1)
 	countries, _ := reader.GetCountryList()
 
 	if reflect.TypeOf(countries).String() != "*bownty.Locations" {
@@ -87,7 +92,8 @@ func TestAPIReader_GetCountryList(t *testing.T) {
 }
 
 func TestAPIReader_GetCityList(t *testing.T) {
-	reader := Create("https://bownty.co.uk", 5, 1)
+	Domain = "https://bownty.co.uk"
+	reader := Create(5, 1)
 	countries, _ := reader.GetCityList(252)
 
 	if reflect.TypeOf(countries).String() != "*bownty.Locations" {
@@ -104,7 +110,8 @@ func TestAPIReader_GetCityList(t *testing.T) {
 }
 
 func TestAPIReader_GetDealSitesList(t *testing.T) {
-	reader := Create("https://bownty.co.uk", 5, 1)
+	Domain = "https://bownty.co.uk"
+	reader := Create(5, 1)
 	countries, _ := reader.GetDealSitesList(252)
 
 	if reflect.TypeOf(countries).String() != "*bownty.Merchants" {

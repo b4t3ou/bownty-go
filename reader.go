@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+var Domain string
+
 // APIReader main struct.
 type APIReader struct {
 	Urls        map[string]string
@@ -32,9 +34,9 @@ var endPoints = map[string]string{
 }
 
 // Create creates a new instance of the APIReader
-func Create(domain string, limit, page int) APIReader {
+func Create(limit, page int) APIReader {
 
-	if domain == "" {
+	if Domain == "" {
 		panic("Bownty domain has to be set!")
 	}
 
@@ -42,7 +44,7 @@ func Create(domain string, limit, page int) APIReader {
 		Urls:        endPoints,
 		Limit:       limit,
 		Page:        page,
-		Domain:      domain,
+		Domain:      Domain,
 		extraParams: []string{},
 	}
 }
