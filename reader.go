@@ -28,7 +28,7 @@ type APIReader struct {
 var endPoints = map[string]string{
 	"countries":  "/api/countries.json",
 	"cities":     "/locations/:country_id/cities.json",
-	"deal_sites":  "/locations/:country_id/deal_sites.json",
+	"deal_sites": "/locations/:country_id/deal_sites.json",
 	"categories": "/locations/:country_id/categories.json",
 	"deals":      "/locations/:city_id/deals.json",
 }
@@ -137,7 +137,7 @@ func (r *APIReader) GetCategoryList(countryId int) (*Categories, error) {
 // If you want to get all the deals in a country add this extra param "inclusive_location=1"
 func (r *APIReader) GetDealList(cityId int) (*Deals, error) {
 	result := &Deals{}
-	content, err :=r.get("deals", ":city_id", strconv.Itoa(cityId))
+	content, err := r.get("deals", ":city_id", strconv.Itoa(cityId))
 
 	if err != nil {
 		return nil, err

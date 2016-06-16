@@ -16,6 +16,7 @@ func TestCreate(t *testing.T) {
 	Domain = ""
 	_ = Create(2, 1)
 }
+
 // TestCreate2 tests success APIReader creation
 func TestCreate2(t *testing.T) {
 	Domain = "https://bownty.co.uk"
@@ -162,7 +163,6 @@ func TestAPIReader_GetDealList(t *testing.T) {
 	if len(deals.Data) != 100 {
 		t.Error("Expected deal count 100, get", len(deals.Data))
 	}
-
 
 	cityDealCount := deals.Pagination.Count
 
