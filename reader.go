@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+var Domain string
+
 // APIReader main struct.
 type APIReader struct {
 	Urls        map[string]string
@@ -26,15 +28,15 @@ type APIReader struct {
 var endPoints = map[string]string{
 	"countries":  "/api/countries.json",
 	"cities":     "/locations/:country_id/cities.json",
-	"merchants":  "/locations/:country_id/deal_sites.json",
+	"deal_sites": "/locations/:country_id/deal_sites.json",
 	"categories": "/locations/:country_id/categories.json",
 	"deals":      "/locations/:city_id/deals.json",
 }
 
 // Create creates a new instance of the APIReader
-func Create(domain string, limit, page int) APIReader {
+func Create(limit, page int) APIReader {
 
-	if domain == "" {
+	if Domain == "" {
 		panic("Bownty domain has to be set!")
 	}
 
@@ -42,7 +44,7 @@ func Create(domain string, limit, page int) APIReader {
 		Urls:        endPoints,
 		Limit:       limit,
 		Page:        page,
-		Domain:      domain,
+		Domain:      Domain,
 		extraParams: []string{},
 	}
 }
@@ -55,10 +57,87 @@ func (r *APIReader) AddExtraParams(params ...string) {
 }
 
 // GetCountryList returns with *Locations struct
-// Contains the country endpoint data
+// Returns with the country endpoint data
 func (r *APIReader) GetCountryList() (*Locations, error) {
 	result := &Locations{}
 	content, err := r.get("countries")
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(content, result)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+// GetCountryList returns with *Locations struct
+// Returns with the cities endpoint data filtered by the country
+func (r *APIReader) GetCityList(countryId int) (*Locations, error) {
+	result := &Locations{}
+	content, err := r.get("cities", ":country_id", strconv.Itoa(countryId))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(content, result)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+// GetDealSitesList returns with *Merchants
+// Returns with the deal sites endpoint data filtered by the country
+func (r *APIReader) GetDealSitesList(countryId int) (*Merchants, error) {
+	result := &Merchants{}
+	content, err := r.get("deal_sites", ":country_id", strconv.Itoa(countryId))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(content, result)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+// GetCategoryList returns with *Categories
+// Returns with the categories endpoint data filtered by the country
+func (r *APIReader) GetCategoryList(countryId int) (*Categories, error) {
+	result := &Categories{}
+	content, err := r.get("categories", ":country_id", strconv.Itoa(countryId))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(content, result)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+// GetDealList returns with *Deals
+// Returns with the deals endpoint data filtered by the city or the country id
+// If you want to get all the deals in a country add this extra param "inclusive_location=1"
+func (r *APIReader) GetDealList(cityId int) (*Deals, error) {
+	result := &Deals{}
+	content, err := r.get("deals", ":city_id", strconv.Itoa(cityId))
 
 	if err != nil {
 		return nil, err
