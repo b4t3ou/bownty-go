@@ -55,10 +55,29 @@ func (r *APIReader) AddExtraParams(params ...string) {
 }
 
 // GetCountryList returns with *Locations struct
-// Contains the country endpoint data
+// Returns with the country endpoint data
 func (r *APIReader) GetCountryList() (*Locations, error) {
 	result := &Locations{}
 	content, err := r.get("countries")
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(content, result)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+// GetCountryList returns with *Locations struct
+// Returns with the cities endpoint data
+func (r *APIReader) GetCityList(countryId int) (*Locations, error) {
+	result := &Locations{}
+	content, err := r.get("cities", ":country_id", strconv.Itoa(countryId))
 
 	if err != nil {
 		return nil, err

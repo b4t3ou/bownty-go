@@ -85,3 +85,20 @@ func TestAPIReader_GetCountryList(t *testing.T) {
 		t.Error("Expected country count 5")
 	}
 }
+
+func TestAPIReader_GetCityList(t *testing.T) {
+	reader := Create("https://bownty.co.uk", 5, 1)
+	countries, _ := reader.GetCityList(252)
+
+	if reflect.TypeOf(countries).String() != "*bownty.Locations" {
+		t.Error("Expected return value countries list")
+	}
+
+	if !countries.Success {
+		t.Error("Expected success country list response")
+	}
+
+	if len(countries.Data) != 5 {
+		t.Error("Expected country count 5")
+	}
+}
