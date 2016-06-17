@@ -50,7 +50,7 @@ func main() {
 	reader.AddExtraParams("inclusive_location=1")
 	deals, _ := reader.GetDealList(252)
 
-	// Deal count in the UK
+	// Deal count in UK
 	fmt.Println(deals.Pagination.Count)
 }
 ````
