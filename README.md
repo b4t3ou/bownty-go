@@ -6,6 +6,10 @@ Bownty Golang API Library
 
 Small Golang library for the Bownty API <https://wiki.bownty.net/display/API/Deals+API>
 
+####Install
+
+go get github.com/b4t3ou/bownty-go
+
 ####Usage
 
 ```go
@@ -29,3 +33,23 @@ countries, _ := reader.GetCategoryList(252)
 // Get deal list, parameter country or city code
 countries, _ := reader.GetDealList(473)
 ```
+
+####Sample
+
+```Go
+package main
+
+import (
+	"github.com/b4t3ou/bownty-go"
+	"fmt"
+)
+
+func main() {
+	bownty.Domain = "https://bownty.co.uk"
+	reader := bownty.Create(20, 1)
+	reader.AddExtraParams("inclusive_location=1")
+	countries, _ := reader.GetCountryList()
+
+	fmt.Println(countries)
+}
+````
