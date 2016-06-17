@@ -2,6 +2,7 @@
 Bownty Golang API Library
 
 [![Build Status](https://travis-ci.org/b4t3ou/bownty-go.svg?branch=master)](https://travis-ci.org/b4t3ou/bownty-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/b4t3ou/bownty-go)](https://goreportcard.com/report/github.com/b4t3ou/bownty-go)
 
 Small Golang library for the Bownty API <https://wiki.bownty.net/display/API/Deals+API>
 
