@@ -15,10 +15,6 @@ var Domain string
 type APIReader struct {
 	Urls        map[string]string
 	Domain      string
-	Request     *http.Request
-	Error       error
-	Response    *http.Response
-	Content     []byte
 	Limit       int
 	Page        int
 	extraParams []string
