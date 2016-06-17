@@ -48,8 +48,9 @@ func main() {
 	bownty.Domain = "https://bownty.co.uk"
 	reader := bownty.Create(20, 1)
 	reader.AddExtraParams("inclusive_location=1")
-	countries, _ := reader.GetCountryList()
+	deals, _ := reader.GetDealList(252)
 
-	fmt.Println(countries)
+	// Deal count in the UK
+	fmt.Println(deals.Pagination.Count)
 }
 ````
