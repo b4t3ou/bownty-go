@@ -22,16 +22,16 @@ reader := Create(20, 1)
 countries, _ := reader.GetCountryList()
 
 // Get city list, parameter country code
-countries, _ := reader.GetCityList(252)
+cities, _ := reader.GetCityList(252)
 
 // Get deal site list, parameter country code
-countries, _ := GetDealSitesList(252)
+dealSites, _ := GetDealSitesList(252)
 
 // Get category list, parameter country code
-countries, _ := reader.GetCategoryList(252)
+categories, _ := reader.GetCategoryList(252)
 
 // Get deal list, parameter country or city code
-countries, _ := reader.GetDealList(473)
+deals, _ := reader.GetDealList(473)
 ```
 
 ####Sample
