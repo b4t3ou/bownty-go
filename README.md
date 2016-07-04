@@ -32,6 +32,10 @@ categories, _ := reader.GetCategoryList(252)
 
 // Get deal list, parameter country or city code
 deals, _ := reader.GetDealList(473)
+
+// Get transaction list
+reader.Password = "XXXX"
+transactions, _ := reader.GetTransactionList()
 ```
 
 ####Sample
