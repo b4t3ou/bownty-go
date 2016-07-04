@@ -1,5 +1,6 @@
 package bownty
 
+// Pagination - meta data of the API response
 type Pagination struct {
 	PageCount   int  `json:"page_count"`
 	CurrentPage int  `json:"current_page"`
@@ -9,16 +10,19 @@ type Pagination struct {
 	Limit       int  `json:"limit"`
 }
 
+// Locations - Countries/cities main response struct
 type Locations struct {
 	Success    bool       `json:"success"`
 	Data       []Location `json:"data"`
 	Pagination Pagination `json:"pagination"`
 }
 
+// Location - Countries/cities array
 type Location struct {
 	Location Place `json:"location"`
 }
 
+// Place - country/city struct
 type Place struct {
 	Id          int     `json:"id"`
 	Name        string  `json:"name"`
@@ -29,6 +33,7 @@ type Place struct {
 	Slug        string  `json:"slug,omitempty"`
 }
 
+// Locations - Countries/cities main response struct
 type Merchants struct {
 	Success    bool            `json:"success"`
 	Data       []MerchantsMain `json:"data"`
@@ -227,4 +232,40 @@ type DealLocalized struct {
 	Savings                string `json:"savings"`
 	FormattedSavings       string `json:"formatted_savings"`
 	SavingsPercent         string `json:"savings_percent"`
+}
+
+type Transactions struct {
+	Success    bool          `json:"success"`
+	Data       []Transaction `json:"data"`
+	Pagination Pagination    `json:"pagination"`
+}
+
+type Transaction struct {
+	Id              int                       `json:"id"`
+	DealSiteId      int                       `json:"deal_site_id"`
+	Sale            float32                   `json:"sale"`
+	Commission      float32                   `json:"commission"`
+	Status          string                    `json:"status"`
+	TransactionTime string                    `json:"transaction_time"`
+	ValidationDate  string                    `json:"validation_date,omitempty"`
+	DeclinedTime    string                    `json:"declined_time,omitempty"`
+	LinkTime        string                    `json:"link_time,omitempty"`
+	SubId           string                    `json:"subid,omitempty"`
+	Created         string                    `json:"created,omitempty"`
+	Currency        TransactionCurrency       `json:"currency"`
+	DealsTracking   TransactionDealsTracking  `json:"deals_tracking"`
+	CashbackPayout  TransactionCashbackPayout `json:"cashback_payout"`
+}
+
+type TransactionCurrency struct {
+	Name string `json:"name"`
+}
+
+type TransactionDealsTracking struct {
+	DealId int `json:"deal_id"`
+}
+
+type TransactionCashbackPayout struct {
+	PaymentDate      string `json:"payment_date,omitempty"`
+	PaymentReference string `json:"payment_reference,omitempty"`
 }
