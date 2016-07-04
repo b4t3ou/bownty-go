@@ -19,14 +19,16 @@ type APIReader struct {
 	Page        int
 	extraParams []string
 	CalledURL   string
+	Password    string
 }
 
 var endPoints = map[string]string{
-	"countries":  "/api/countries.json",
-	"cities":     "/locations/:country_id/cities.json",
-	"deal_sites": "/locations/:country_id/deal_sites.json",
-	"categories": "/locations/:country_id/categories.json",
-	"deals":      "/locations/:city_id/deals.json",
+	"countries":    "/api/countries.json",
+	"cities":       "/locations/:country_id/cities.json",
+	"deal_sites":   "/locations/:country_id/deal_sites.json",
+	"categories":   "/locations/:country_id/categories.json",
+	"deals":        "/locations/:city_id/deals.json",
+	"transactions": "/transactions.json",
 }
 
 // Create creates a new instance of the APIReader
@@ -148,6 +150,23 @@ func (r *APIReader) GetDealList(cityId int) (*Deals, error) {
 	return result, nil
 }
 
+func (r *APIReader) GetTransactionList() (*Transactions, error) {
+	result := &Transactions{}
+	content, err := r.get("transactions")
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(content, result)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (r *APIReader) get(key string, params ...string) ([]byte, error) {
 	url := r.Urls[key]
 
@@ -171,6 +190,10 @@ func (r *APIReader) get(key string, params ...string) ([]byte, error) {
 
 	req, err := http.NewRequest("GET", r.Domain+url, bytes.NewBuffer([]byte{}))
 	req.Header.Set("Content-Type", "application/json")
+
+	if r.Password != "" {
+		req.Header.Set("X-Site-Authorization", r.Password)
+	}
 
 	if err != nil {
 		return nil, err
