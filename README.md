@@ -34,6 +34,7 @@ categories, _ := reader.GetCategoryList(252)
 deals, _ := reader.GetDealList(473)
 
 // Get transaction list
+// It is working only with your subdomain
 reader.Password = "XXXX"
 transactions, _ := reader.GetTransactionList()
 ```
