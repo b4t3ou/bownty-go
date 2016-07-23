@@ -16,7 +16,7 @@ go get github.com/b4t3ou/bownty-go
 Domain = "https://bownty.co.uk" //or your subdomain
 
 First parameter limit second parameter page
-reader := Create(20, 1)
+reader := bownty.Create(20, 1)
 
 // Get country list
 countries, _ := reader.GetCountryList()
